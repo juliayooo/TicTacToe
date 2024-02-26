@@ -1,0 +1,249 @@
+<html>
+<head>
+    <title>Tic Tac Toe!</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        .square{
+            width: 200px;
+            height: 200px;
+            max-height: 200px;
+            max-width: 200px;
+            display: inline-block;
+            border: 2px solid #000000;
+            border-radius: 15px;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 0;
+            vertical-align: top;
+
+        }
+        .square:hover{
+            background-color: red;
+        }
+        body{
+            padding-left: 25%;
+            padding-right: 25%;
+
+        }
+        h1{
+            text-align: center;
+            margin-top: 20px;
+            color: red;
+            font-family: Georgia;
+            font-size: 50pt;
+            margin-bottom: 0px;
+        }
+        .turnIndicator{
+            margin-top: 0px;
+            width: 50%;
+            height: 5%;
+            border: 2px solid black;
+            margin-left: 20%;
+            margin-right: 30%;
+            margin-bottom: 5px;
+            border-radius: 15px;
+            padding-left: 10px;
+            padding-top: 5px;
+            font-size: 25px;
+            text-align: center;
+
+        }
+        .winIndicator{
+            width: 50%;
+            height: 5%;
+            border: 2px solid black;
+            margin-left: 20%;
+            margin-right: 30%;
+            border-radius: 15px;
+            padding-left: 10px;
+            padding-top: 5px;
+            font-size: 25px;
+            text-align: center;
+
+
+
+        }
+        div.square{
+            text-align: center;
+            font-size: 200px;
+            line-height: 200px;
+            padding: 0;
+            margin: 5px;
+        }
+        #buttonDiv{
+            text-align: center;
+            margin-left: 20%;
+            margin-right: 30%;
+        }
+
+
+    </style>
+    <script>
+    window.onload = function(){   
+    let moves= ["-", "-", "-", "-", "-", "-", "-", "-", "-"];
+    let winners=["XXX", "OOO"];
+    let Xturn= true;
+
+    document.getElementById('turn').innerHTML = "X's turn!";
+
+
+        // RESET BUTTON
+    document.getElementById('gameButton').onclick = function(){
+                    for(let j = 0; j < 9; j++){
+                        moves[j] = "-";
+                        var mysq =  document.getElementById('sq' + j);
+                        mysq.innerHTML = "";
+                    }
+                    Xturn = true;
+                    document.getElementById('winner').innerHTML = "winner?";
+                    document.getElementById('turn').innerHTML = "X's turn!";
+
+                
+                }
+
+  
+            // BOX CLICK 
+    for(let i = 0; i < 9; i++){
+        document.getElementById('sq' + i).onclick = function(){
+            if(Xturn == true){
+            ClickX(i);
+            Xturn=false;
+            }
+            else if(Xturn == false){
+            ClickO(i);
+            Xturn=true;
+            }
+
+            
+        }
+    }
+
+    // XXXXX
+    function ClickX(n) {
+        var sq =  document.getElementById('sq' + n);
+        if (sq.innerHTML === ""){
+        sq.innerHTML = "X";
+        moves[n] = "X";
+        if(winner("X") == true){
+            document.getElementById('winner').innerHTML = "X WINS!";
+
+        }else{
+            stalemate();
+
+        }
+
+        }
+        alert(n);
+       
+        document.getElementById('turn').innerHTML = "O's turn!";
+
+
+    }
+
+
+
+    // OOOO
+    function ClickO(n) {
+        var sq =  document.getElementById('sq' + n);
+        if (sq.innerHTML === ""){
+        sq.innerHTML = "O";
+        moves[n] = "O";
+        if(winner("O") == true){
+            document.getElementById('winner').innerHTML = "O WINS!";
+
+
+        }else{
+            stalemate();
+        }
+        }
+        alert(n);
+        document.getElementById('turn').innerHTML = "X's turn!";
+
+
+   
+    }
+
+
+
+
+function winner(player){
+    let conditions = "";
+    if(player === "X"){
+        condition = winners[0];
+    }
+    else if(player ==="O"){
+        condition = winners[1];
+    }
+    if(moves[0] + moves[1] + moves[2] === condition){
+            return true;
+        }
+    else if (moves[3] + moves[4] + moves[5] === condition){
+                return true;}
+    else if (moves[6] + moves[7] + moves[8] === condition){            
+                return true;}    
+    else if (moves[0] + moves[3] + moves[6] === condition){
+                return true;}
+    else if (moves[1] + moves[4] + moves[7] === condition){
+                return true;}
+    else if (moves[2] + moves[5] + moves[8] === condition){
+                return true;}
+    else if (moves[0] + moves[4] + moves[8] === condition){
+            return true;}
+    else if (moves[6] + moves[4] + moves[2] === condition){
+            return true;}
+    else{
+        return false;}    
+
+}
+
+function stalemate(){
+    let isStalemate = false;
+    for(var z= 0; z < 9; z++){
+        if(moves[z] == "-"){
+            isStalemate = false;
+            break;
+        }
+        else{
+            isStalemate = true;
+        }
+        
+    }
+    if(isStalemate){
+        document.getElementById('winner').innerHTML = "Stalemate! Click below to reset.";
+
+    }
+    else{
+        return;
+    }
+}
+
+    }
+    </script>
+    
+</head>
+<body>
+    <h1>Tic Tac Toe!</h1>
+    <div id='turn' class='turnIndicator'> who's turn?</div>   
+    <div id='winner' class='winIndicator'>winner? </div>
+</br>
+    <div id='buttonDiv'><input type='button' value='Start Game' id='gameButton'></div>
+</br>
+    <script>
+
+        const NUM_SQUARES = 9;
+        for (i=0; i<NUM_SQUARES; i++)
+        {
+        id = "sq"+i;
+            document.write( "<div class='square' id='" + id + "'></div>" );
+        }
+        
+        </script>
+       
+
+    
+    
+</body>
+
+
+</html>
